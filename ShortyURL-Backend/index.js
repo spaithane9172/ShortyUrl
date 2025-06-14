@@ -8,23 +8,19 @@ import UrlRouter from "./routes/UrlRoutes.js";
 dotenv.config();
 
 const app = express();
-app.use(express.json());
-app.use(cookieParser());
-
-app.use("/user", UserSchema);
-app.use("/url", UrlRouter);
-
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173", "http://192.168.31.166:5173/"],
     methods: ["POST", "PUT", "DELETE", "GET"],
     credentials: true,
   })
 );
 
-app.get("/", (request, response) => {
-  return response.status(200).json({ message: "api call" });
-});
+app.use(express.json());
+app.use(cookieParser());
+
+app.use("/user", UserSchema);
+app.use("/url", UrlRouter);
 
 mongoose.connect(process.env.MONGODB_URL).then(() => {
   console.log("Connected to DB.");

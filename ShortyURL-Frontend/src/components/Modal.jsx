@@ -3,8 +3,8 @@ const Modal = ({ isOpen, onClose, title, children }) => {
   return (
     <div className="bg-gray-400/40 w-[100vw] h-[100vh] absolute top-0 left-0 flex justify-center items-center">
       <div className="bg-white  rounded-md shadow-md">
-        <div className="w-full flex justify-between items-center border-b-[1px] border-gray-200">
-          <h1 className="text-[0.8rem] pl-[0.5rem] font-semibold">{title}</h1>
+        <div className="w-full flex justify-between items-center border-b-[1px] border-gray-200 py-[0.5rem]">
+          <h1 className="text-[0.9rem] pl-[0.5rem] font-semibold">{title}</h1>
           <button
             className="w-fit px-[0.5rem] pb-[0.3rem] font-semibold text-[0.9rem]"
             onClick={onClose}

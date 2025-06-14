@@ -1,7 +1,7 @@
 const Form = ({ formData, setFormValues }) => {
   return (
     <div className="w-full flex justify-center items-center">
-      <form className="lg:w-[30vw] flex flex-col justify-center">
+      <form className="lg:w-[30vw] flex flex-col justify-center ">
         {formData.formFields.map((formField) => {
           return (
             <>
@@ -20,7 +20,7 @@ const Form = ({ formData, setFormValues }) => {
                         [e.target.name]: e.target.value,
                       }));
                     }}
-                    className="rounded-sm py-[0.2rem] border-[1px] border-gray-400 outline-none my-[0.2rem] w-full pl-[0.5rem] placeholder:text-[0.8rem] placeholder:font-semibold shadow-md focus:border-blue-300"
+                    className="rounded-sm py-[0.3rem] lg:py-[0.5rem] border-[1px] border-gray-400 outline-none my-[0.3rem] lg:my-[0.5rem] w-full pl-[0.5rem] placeholder:text-[0.9rem] placeholder:font-semibold shadow-md focus:border-blue-300"
                   />
                 </div>
               )}
@@ -29,7 +29,7 @@ const Form = ({ formData, setFormValues }) => {
         })}
         <button
           onClick={formData.btnFun}
-          className="shadow-md w-full rounded-sm bg-blue-500 py-[0.2rem] my-[1rem] text-white font-semibold"
+          className="shadow-md w-full rounded-sm bg-blue-500 py-[0.3rem] lg:py-[0.5rem] my-[0.5rem] lg:my-[1rem] text-white font-semibold"
         >
           {formData.btnTitle}
         </button>

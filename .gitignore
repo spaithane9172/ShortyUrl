@@ -1,0 +1,21 @@
+# Node modules (both frontend and backend)
+**/node_modules/
+
+# Build files
+frontend/build/
+backend/build/
+
+# Environment variables
+**/.env
+
+# Logs
+**/logs
+**/*.log
+
+# OS/IDE files
+.DS_Store
+*.swp
+.vscode/
+.idea/
+
+# Optional: .next or .vercel if used in future

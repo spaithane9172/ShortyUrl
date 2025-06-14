@@ -2,8 +2,8 @@
 **/node_modules/
 
 # Build files
-frontend/build/
-backend/build/
+ShortyURL-Frontend/build/
+ShortyURL-Backend/build/
 
 # Environment variables
 **/.env

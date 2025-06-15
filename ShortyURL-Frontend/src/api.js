@@ -8,6 +8,7 @@ const api = axios.create({
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
+    console.log("before");
     const originalRequest = error.config;
     if (
       error.response?.status === 401 &&
@@ -16,9 +17,13 @@ api.interceptors.response.use(
       !originalRequest.url.includes("/signup") &&
       !originalRequest.url.includes("/refreshToken")
     ) {
+      console.log("after");
       originalRequest._retry = true;
       try {
-        await api.post("/user/refreshToken");
+        const resp = await api.post("/user/refreshToken");
+        if (resp.status !== 200) {
+          localStorage.removeItem("authenticated");
+        }
         return api(originalRequest);
       } catch (refreshError) {
         window.location.href = "/login";

@@ -18,6 +18,24 @@ const createRefreshToken = (userId) => {
   });
 };
 
+router.get("/logout", authenticateUser, (request, response) => {
+  try {
+    response.clearCookie("acceessToken", {
+      httpOnly: true,
+      secure: false,
+      sameSite: "lax",
+    });
+    response.clearCookie("refreshToken", {
+      httpOnly: true,
+      secure: false,
+      sameSite: "lax",
+    });
+    return response.status(200).json({ message: "User Logout Successfully." });
+  } catch (error) {
+    return response.status(500).json({ message: "Internal Server Error." });
+  }
+});
+
 router.get("/", authenticateUser, async (request, response) => {
   try {
     const { id } = request.user;

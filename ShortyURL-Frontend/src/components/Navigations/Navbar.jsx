@@ -6,7 +6,7 @@ import api from "../../api";
 import Modal from "../Modal";
 import { toast } from "react-toastify";
 const Navbar = () => {
-  const { setIsUserLogin } = useContext(Context);
+  const { setIsUserLogin, isUserLogin } = useContext(Context);
 
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
@@ -64,7 +64,9 @@ const Navbar = () => {
     }
   };
   useEffect(() => {
-    fetchUserDetails();
+    if (isUserLogin || localStorage.getItem("authenticated")) {
+      fetchUserDetails();
+    }
   }, []);
 
   return (

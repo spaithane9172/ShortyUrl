@@ -22,12 +22,12 @@ router.get("/logout", authenticateUser, (request, response) => {
   try {
     response.clearCookie("acceessToken", {
       httpOnly: true,
-      secure: false,
+      secure: true,
       sameSite: "lax",
     });
     response.clearCookie("refreshToken", {
       httpOnly: true,
-      secure: false,
+      secure: true,
       sameSite: "lax",
     });
     return response.status(200).json({ message: "User Logout Successfully." });
@@ -119,7 +119,7 @@ router.post("/refreshToken", async (request, response) => {
       const accessToken = createAccessToken(user.id);
       response.cookie("accessToken", accessToken, {
         httpOnly: true,
-        secure: false,
+        secure: true,
         sameSite: "lax",
         maxAge: 1000 * 60 * 15,
       });
@@ -154,13 +154,13 @@ router.post("/login", async (request, response) => {
     const refreshToken = createRefreshToken(user._id);
     response.cookie("accessToken", accessToken, {
       httpOnly: true,
-      secure: false,
+      secure: true,
       sameSite: "lax",
       maxAge: 1000 * 60 * 15,
     });
     response.cookie("refreshToken", refreshToken, {
       httpOnly: true,
-      secure: false,
+      secure: true,
       sameSite: "lax",
       maxAge: 1000 * 60 * 60 * 24 * 7,
     });

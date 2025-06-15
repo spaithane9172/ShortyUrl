@@ -58,7 +58,7 @@ router.put("/", authenticateUser, async (request, response) => {
     const url = await Url.findOne({ _id });
 
     if (!url) {
-      return response.status(404).json({ message: "Url not fouond." });
+      return response.status(400).json({ message: "Url not fouond." });
     }
     url.originalURL = originalUrl;
     url.save();
@@ -88,11 +88,11 @@ router.get("/:uniqueCode", async (request, response) => {
   try {
     const { uniqueCode } = request.params;
     if (!uniqueCode) {
-      return response.status(404).json({ message: "Not found." });
+      return response.status(400).json({ message: "Not found." });
     }
     const url = await Url.findOne({ urlUniqueCode: uniqueCode });
     if (!url) {
-      return response.status(404).json({ message: "Not Found." });
+      return response.status().json({ message: "Not Found." });
     }
     url.visited += 1;
     url.save();

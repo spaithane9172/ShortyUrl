@@ -3,6 +3,8 @@ import Form from "../components/Form";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../api";
 import { Context } from "../context/AppContext";
+import bg from "../assets/bg.png";
+import { toast } from "react-toastify";
 
 const Authenticate = () => {
   const { setIsUserLogin, isUserLogin } = useContext(Context);
@@ -13,19 +15,18 @@ const Authenticate = () => {
     if (formValues.email.length !== 0 && formValues.password.length >= 8) {
       try {
         const response = await api.post("/user/login", formValues);
-        alert(response);
         if (response.status === 200) {
           setIsUserLogin(true);
           localStorage.setItem("authenticated", true);
           navigate("/dashboard");
         } else {
-          alert(response.data.message);
+          toast.error(response.data.message);
         }
       } catch (error) {
-        alert(error);
+        toast.error(error.response.data.message);
       }
     } else {
-      alert("Invalid Credentials");
+      toast.error("Invalid Credentials");
     }
   };
   useEffect(() => {
@@ -37,7 +38,18 @@ const Authenticate = () => {
     <div className="flex justify-center items-center h-[80vh]">
       {!localStorage.getItem("authenticated") && (
         <div className="px-[1rem] py-[0.5rem] border-[1px] border-gray-300 shadow-lg rounded-md w-fit h-fit bg-white">
-          <h1 className="relative top-[-1.3rem] bg-white w-fit">Login</h1>
+          <div
+            className="absolute inset-0 bg-cover bg-center filter blur-xl -z-1"
+            style={{
+              backgroundImage: `url(${bg})`,
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          ></div>
+          <h1 className="bg-white w-fit mb-[1rem] font-semibold text-[1.3rem]">
+            Login
+          </h1>
           <Form
             setFormValues={setFormValues}
             formData={{

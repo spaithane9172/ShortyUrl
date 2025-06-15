@@ -4,8 +4,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../../context/AppContext";
 import api from "../../api";
 import Modal from "../Modal";
+import { toast } from "react-toastify";
 const Navbar = () => {
-  const { isUserLogin, setIsUserLogin } = useContext(Context);
+  const { setIsUserLogin } = useContext(Context);
+
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const [showDropDown, setShowDropDown] = useState(false);
@@ -20,12 +22,13 @@ const Navbar = () => {
       if (response.status === 200) {
         localStorage.removeItem("authenticated");
         navigate("/");
+        toast.success("User LogOut.");
         setIsUserLogin(false);
       } else {
-        alert("Something Wrong.");
+        toast.error("Something Wrong.");
       }
     } catch (error) {
-      alert(error);
+      toast.error(error.response.data.message);
     }
   };
   const updateUserDetails = async (e) => {
@@ -39,10 +42,14 @@ const Navbar = () => {
           firstName: userDetails.firstName,
           lastName: userDetails.lastName,
         });
-        alert(response.data.message);
+        if (response.status === 200) {
+          toast.success(response.data.message);
+        } else {
+          toast.error(response.data.message);
+        }
       }
     } catch (error) {
-      alert(error);
+      toast.error(error.response.data.message);
     }
   };
 
@@ -53,14 +60,13 @@ const Navbar = () => {
         setUserDetails(response.data.user);
       }
     } catch (error) {
-      alert(error);
+      toast.error(error.response.data.message);
     }
   };
   useEffect(() => {
-    if (localStorage.getItem("authenticated")) {
-      fetchUserDetails();
-    }
+    fetchUserDetails();
   }, []);
+
   return (
     <nav className="shadow-md flex justify-between items-center px-[1rem] lg:px-[2rem] py-[1rem] bg-gradient-to-b from-gray-300 to-gray-100 fixed w-full">
       <Modal
@@ -72,7 +78,7 @@ const Navbar = () => {
       >
         <div className="flex flex-col px-[1rem] py-[0.5rem]">
           <input
-            className="w-[25vw] border-[1px] border-gray-300 focus:border-blue-400 rounded-sm outline-none pl-[0.5rem] my-[0.5rem] py-[0.5rem]"
+            className="w-[70vw] lg:w-[25vw] border-[1px] border-gray-300 focus:border-blue-400 rounded-sm outline-none pl-[0.5rem] my-[0.5rem] py-[0.3rem] lg:py-[0.5rem]"
             type="text"
             name="firstName"
             value={userDetails.firstName}
@@ -84,7 +90,7 @@ const Navbar = () => {
             }}
           />
           <input
-            className="w-[25vw] border-[1px] border-gray-300 focus:border-blue-400 rounded-sm outline-none pl-[0.5rem] my-[0.5rem] py-[0.5rem]"
+            className="w-[70vw] lg:w-[25vw] border-[1px] border-gray-300 focus:border-blue-400 rounded-sm outline-none pl-[0.5rem] my-[0.5rem] py-[0.3rem] lg:py-[0.5rem]"
             type="text"
             name="lastName"
             value={userDetails.lastName}
@@ -96,7 +102,7 @@ const Navbar = () => {
             }}
           />
           <input
-            className="w-[25vw] border-[1px] border-gray-300 focus:border-blue-400 rounded-sm outline-none pl-[0.5rem] my-[0.5rem] py-[0.5rem]"
+            className="w-[70vw] lg:w-[25vw] border-[1px] border-gray-300 focus:border-blue-400 rounded-sm outline-none pl-[0.5rem] my-[0.5rem] py-[0.3rem] lg:py-[0.5rem]"
             type="email"
             name="email"
             value={userDetails.email}
@@ -104,7 +110,7 @@ const Navbar = () => {
           />
           <button
             onClick={updateUserDetails}
-            className="bg-blue-500 hover:bg-blue-600 font-semibold text-white rounded-sm my-[1rem] py-[0.5rem]"
+            className="bg-blue-500 hover:bg-blue-600 font-semibold text-white rounded-sm my-[1rem] py-[0.3rem] lg:py-[0.5rem]"
           >
             Update
           </button>

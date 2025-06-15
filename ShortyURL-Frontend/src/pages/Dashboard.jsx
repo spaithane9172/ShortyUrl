@@ -3,6 +3,7 @@ import Modal from "../components/Modal";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../context/AppContext";
 import api from "../api";
+import { toast } from "react-toastify";
 
 const Dashboard = () => {
   const { isUserLogin, setIsUserLogin } = useContext(Context);
@@ -21,6 +22,7 @@ const Dashboard = () => {
   const copyUrl = async () => {
     if (navigator.clipboard && window.isSecureContext) {
       await navigator.clipboard.writeText(url);
+      toast.success("URL Copied successfully.");
     } else {
       const textarea = document.createElement("textarea");
       textarea.value = url;
@@ -30,6 +32,7 @@ const Dashboard = () => {
       textarea.select();
       document.execCommand("copy");
       document.body.removeChild(textarea);
+      toast.success("URL Copied successfully.");
     }
   };
   const shortUrl = async (e) => {
@@ -38,16 +41,16 @@ const Dashboard = () => {
       if (url.length > 6) {
         const response = await api.post("/url", { originalUrl: url });
         if (response.status == 200) {
-          alert(response.data.message);
+          toast.success(response.data.message);
           setIsUserLogin(true);
           setIsOpen(false);
           fetchUrls();
         } else {
-          alert(response.data, message);
+          toast.error(response.data, message);
         }
       }
     } catch (error) {
-      alert(error);
+      toast.error(error.response.data.message);
     }
   };
   const searchURL = (e) => {
@@ -58,15 +61,14 @@ const Dashboard = () => {
   const fetchUrls = async () => {
     try {
       const response = await api.get("/url");
-      console.log(response.data);
       if (response.status === 200) {
         setUrlsData(response.data.urls);
         setIsUserLogin(true);
       } else {
-        alert(response.data.message);
+        toast.error(response.data.message);
       }
     } catch (error) {
-      alert(error);
+      toast.error(error.response.data.message);
     }
   };
 
@@ -79,16 +81,16 @@ const Dashboard = () => {
           originalUrl: url.originalURL,
         });
         if (response.status === 200) {
-          alert(response.data.message);
+          toast.success(response.data.message);
           fetchUrls();
           setIsOpenUpdate(false);
           setUrl("");
         } else {
-          alert(response.data.message);
+          toast.error(response.data.message);
         }
       }
     } catch (error) {
-      alert(error);
+      toast.error(error.response.data.message);
     }
   };
 
@@ -98,12 +100,12 @@ const Dashboard = () => {
       if (response.status === 200) {
         setIsUserLogin(true);
         fetchUrls();
-        alert(response.data.message);
+        toast.success(response.data.message);
       } else {
-        alert(response.data.message);
+        toast.error(response.data.message);
       }
     } catch (error) {
-      alert(error);
+      toast.error(error.response.data.message);
     }
   };
   useEffect(() => {
@@ -113,6 +115,25 @@ const Dashboard = () => {
     <div className="mt-[3rem] px-[1rem] lg:px-[2rem]">
       {localStorage.getItem("authenticated") && (
         <div>
+          <div className="flex justify-center my-[2rem]">
+            <div className="border-[1px] bg-gradient-to-b from-blue-300 to-blue-100 border-gray-400 rounded-md shadow-md  flex flex-col justify-center items-center w-[40vw] lg:w-[25vw] h-[15vh] lg:h-[20vh] mx-[1rem] lg:mx-[2rem]">
+              <p className="text-[2rem] lg:text-[2.5rem] font-bold">
+                {urlsData.length}
+              </p>
+              <p className="text-[1rem] lg:text-[1.1rem] font-semibold">
+                Total Urls
+              </p>
+            </div>
+            <div className="border-[1px] bg-gradient-to-b from-blue-300 to-blue-100 border-gray-400 rounded-md shadow-md flex flex-col justify-center items-center w-[40vw] lg:w-[25vw] h-[15vh] lg:h-[20vh] mx-[1rem] lg:mx-[2rem]">
+              <p className="text-[2rem] lg:text-[2.5rem] font-bold">
+                {urlsData.reduce((acc, curr) => acc + curr.visited, 0)}
+              </p>
+              <p className="text-[1rem] lg:text-[1.1rem] font-semibold">
+                Total Visits
+              </p>
+            </div>
+          </div>
+
           <Modal
             title={"Update Original URL"}
             isOpen={isOpenUpdate}
@@ -132,7 +153,7 @@ const Dashboard = () => {
                   }));
                 }}
                 placeholder="https://originalUrl.com"
-                className="outline-none border-[1px] border-gray-300 lg:w-[30vw] mb-[1rem] py-[0.3rem] lg:py-[0.5rem] pl-[0.5rem]"
+                className="outline-none border-[1px] border-gray-300 w-[70vw] lg:w-[30vw] mb-[1rem] py-[0.3rem] lg:py-[0.5rem] pl-[0.5rem]"
               />
               <button
                 onClick={updateUrl}
@@ -144,7 +165,7 @@ const Dashboard = () => {
           </Modal>
 
           <Modal
-            title={"Short URL"}
+            title={"Shorten URL"}
             isOpen={isOpen}
             onClose={() => {
               setIsOpen(false);
@@ -158,7 +179,7 @@ const Dashboard = () => {
                   setUrl(e.target.value);
                 }}
                 placeholder="https://demo.com"
-                className="outline-none border-[1px] border-gray-300 lg:w-[30vw] mb-[1rem] py-[0.3rem] lg:py-[0.5rem] pl-[0.5rem]"
+                className="rounded-sm outline-none border-[1px] border-gray-300 w-[70vw] lg:w-[30vw] mb-[1rem] py-[0.3rem] lg:py-[0.5rem] pl-[0.5rem]"
               />
               <button
                 onClick={shortUrl}
@@ -174,7 +195,7 @@ const Dashboard = () => {
             title="Original Url"
             onClose={() => {
               setShowURL(false);
-              setUrl();
+              setUrl("");
             }}
           >
             <div className="flex flex-col justify-center items-center w-[80vw] lg:w-[50vw]">
@@ -217,81 +238,92 @@ const Dashboard = () => {
             </div>
           </div>
           <div className="w-full rounded-lg overflow-hidden mt-[1rem] border-[1px] border-blue-300">
-            <table className="w-full">
-              <thead className="bg-blue-200 w-full">
-                <tr className="text-[0.8rem] lg:text-[0.9rem] w-full">
-                  <th className="text-center py-[0.5rem]">Sr. No.</th>
-                  <th className="text-center py-[0.5rem]">
-                    Original <i className="fa-solid fa-link"></i>
-                  </th>
-                  <th className="text-center py-[0.5rem]">
-                    Short <i className="fa-solid fa-link"></i>
-                  </th>
-                  <th className="text-center py-[0.5rem]">Visited</th>
-                  <th className="text-center py-[0.5rem]">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {urlsData.map((data, indx) => {
-                  return (
-                    <tr
-                      className="text-[0.8rem] lg:text-[0.9rem] w-full"
-                      key={data._id}
-                    >
-                      <td className="text-center py-[0.3rem]">{indx + 1}</td>
-                      <td
-                        className="text-center py-[0.3rem]"
-                        title={data.originalURL}
+            <div className="w-full border rounded-md">
+              <table className="w-full table-fixed">
+                <thead className="w-full bg-blue-200">
+                  <tr className="text-[0.8rem] lg:text-[0.9rem]">
+                    <th className="text-center py-[0.5rem]">Sr. No.</th>
+                    <th className="text-center py-[0.5rem]">
+                      Original <i className="fa-solid fa-link"></i>
+                    </th>
+                    <th className="text-center py-[0.5rem]">
+                      Short <i className="fa-solid fa-link"></i>
+                    </th>
+                    <th className="text-center py-[0.5rem]">Visited</th>
+                    <th className="text-center py-[0.5rem]">Action</th>
+                  </tr>
+                </thead>
+              </table>
+
+              <div className="max-h-[700px] lg:max-h-[350px] overflow-y-auto">
+                <table className="w-full table-fixed">
+                  <tbody>
+                    {urlsData.map((data, indx) => (
+                      <tr
+                        className="text-[0.8rem] lg:text-[0.9rem]"
+                        key={data._id}
                       >
-                        <button
-                          className="cursor-pointer"
-                          onClick={() => {
-                            setShowURL(true);
-                            setUrl(data.originalURL);
-                          }}
+                        <td className="text-center py-[0.3rem]">{indx + 1}</td>
+                        <td
+                          className="text-center py-[0.3rem]"
+                          title={data.originalURL}
                         >
-                          {data.originalURL.slice(0, 20)}
-                        </button>
-                      </td>
-                      <td
-                        className="text-center py-[0.3rem]"
-                        title={data.shortURL}
-                      >
-                        <button
-                          className="cursor-pointer"
-                          onClick={() => {
-                            setShowURL(true);
-                            setUrl(data.shortURL);
-                          }}
+                          <button
+                            className="cursor-pointer"
+                            onClick={() => {
+                              setShowURL(true);
+                              setUrl(data.originalURL);
+                            }}
+                          >
+                            <span className="text-wrap hidden md:block">
+                              {data.originalURL.slice(0, 25)}
+                            </span>
+                            <span className="text-wrap md:hidden">
+                              {data.originalURL.slice(0, 10)}
+                            </span>
+                          </button>
+                        </td>
+                        <td
+                          className="text-center py-[0.3rem]"
+                          title={data.shortURL}
                         >
-                          {data.shortURL.slice(0, 10)}
-                        </button>
-                      </td>
-                      <td className="text-center py-[0.3rem]">
-                        {data.visited}
-                      </td>
-                      <td className="text-center py-[0.3rem]">
-                        <button
-                          onClick={() => {
-                            deleteRecord(data._id);
-                          }}
-                        >
-                          <i className="fa-solid fa-trash text-red-600 mx-[0.5rem] cursor-pointer"></i>
-                        </button>
-                        <button
-                          onClick={() => {
-                            setUrl(data);
-                            setIsOpenUpdate(true);
-                          }}
-                        >
-                          <i className="fa-solid fa-pen-to-square text-blue-600 mx-[0.5rem] cursor-pointer"></i>
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+                          <button
+                            className="cursor-pointer"
+                            onClick={() => {
+                              setShowURL(true);
+                              setUrl(data.shortURL);
+                            }}
+                          >
+                            <span className="text-wrap hidden md:block">
+                              {data.shortURL.slice(0, 25)}
+                            </span>
+                            <span className="text-wrap  md:hidden">
+                              {data.shortURL.slice(0, 10)}
+                            </span>
+                          </button>
+                        </td>
+                        <td className="text-center py-[0.3rem]">
+                          {data.visited}
+                        </td>
+                        <td className="text-center py-[0.3rem]">
+                          <button onClick={() => deleteRecord(data._id)}>
+                            <i className="fa-solid fa-trash text-red-600 mx-[0.5rem] cursor-pointer"></i>
+                          </button>
+                          <button
+                            onClick={() => {
+                              setUrl(data);
+                              setIsOpenUpdate(true);
+                            }}
+                          >
+                            <i className="fa-solid fa-pen-to-square text-blue-600 mx-[0.5rem] cursor-pointer"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         </div>
       )}

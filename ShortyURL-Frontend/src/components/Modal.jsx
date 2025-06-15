@@ -9,7 +9,7 @@ const Modal = ({ isOpen, onClose, title, children }) => {
             className="w-fit px-[0.5rem] pb-[0.3rem] font-semibold text-[0.9rem]"
             onClick={onClose}
           >
-            <i className="fa-solid fa-xmark"></i>
+            <i className="fa-solid fa-xmark cursor-pointer"></i>
           </button>
         </div>
         <div className="px-[1rem] py-[0.5rem]">{children}</div>

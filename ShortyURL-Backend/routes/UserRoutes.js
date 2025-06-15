@@ -61,7 +61,7 @@ router.put("/updateUser", authenticateUser, async (request, response) => {
     const { firstName, lastName } = request.body;
     const user = await User.findOne({ _id: id });
     if (!user) {
-      return response.status(404).json({ message: "User not found." });
+      return response.status(400).json({ message: "User not found." });
     }
     user.firstName = firstName;
     user.lastName = lastName;
@@ -138,7 +138,7 @@ router.post("/login", async (request, response) => {
     }
     const user = await User.findOne({ email });
     if (!user) {
-      return response.status(404).json({ message: "Invalid Credentials." });
+      return response.status(400).json({ message: "Invalid Credentials." });
     }
     const passwordWithPaper = password + process.env.PAPER;
     const isPasswordValid = await bcrypt.compare(

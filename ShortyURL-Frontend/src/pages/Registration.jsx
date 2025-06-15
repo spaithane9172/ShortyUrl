@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import Form from "../components/Form";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../api";
+import { toast } from "react-toastify";
+import bg from "../assets/bg.png";
 
 const Registration = () => {
   const navigate = useNavigate();
@@ -30,14 +32,14 @@ const Registration = () => {
           password: formValues.password,
         });
         if (response.status === 200) {
-          alert(response.data.message);
+          toast.success(response.data.message);
           navigate("/login");
         } else {
-          alert(response.data.message);
+          toast.error(response.data.message);
         }
       }
     } catch (error) {
-      alert(error);
+      toast.error(error.response.data.message);
     }
   };
   useEffect(() => {
@@ -49,7 +51,18 @@ const Registration = () => {
     <div className="flex justify-center items-center h-[80vh]">
       {!localStorage.getItem("authenticated") && (
         <div className="px-[1rem] py-[0.5rem] border-[1px] border-gray-300 shadow-lg rounded-md w-fit h-fit bg-white">
-          <h1 className="relative top-[-1.3rem] bg-white w-fit">SignUp</h1>
+          <div
+            className="absolute inset-0 bg-cover bg-center filter blur-xl -z-1"
+            style={{
+              backgroundImage: `url(${bg})`,
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          ></div>
+          <h1 className=" bg-white w-fit mb-[1rem] font-semibold text-[1.3rem]">
+            SignUp
+          </h1>
           <Form
             setFormValues={setFormValues}
             formData={{

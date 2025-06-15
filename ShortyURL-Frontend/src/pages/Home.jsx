@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../api";
+import bg from "../assets/bg.png";
+import { toast } from "react-toastify";
 
 const Home = () => {
   const [url, setUrl] = useState("");
@@ -10,20 +12,33 @@ const Home = () => {
     try {
       if (url.length > 6) {
         const response = await api.post("/url", { originalUrl: url });
-        alert(response.data.message);
+        if (response.status === 200) {
+          toast.success(response.data.message);
+        } else {
+          toast.error(response.data.message);
+        }
       }
     } catch (error) {
-      alert(error);
+      toast.error(error.response.data.message);
     }
   };
   return (
-    <div className="flex justify-center items-center min-h-[90vh] px-4 bg-gradient-to-br from-blue-50 via-white to-blue-100">
+    <div className="flex justify-center items-center min-h-screen px-4  overflow-hidden">
+      <div
+        className="absolute inset-0 bg-cover bg-center filter blur-xl -z-1"
+        style={{
+          backgroundImage: `url(${bg})`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      ></div>
       <div className="text-center max-w-2xl">
         <i className="fa-solid fa-link text-[4rem] mb-[0.2rem] text-blue-500"></i>
         <h1 className="text-blue-600 font-extrabold text-3xl lg:text-5xl mb-4 tracking-tight">
           ShortyURL
         </h1>
-        <div className="flex border-[1px] border-gray-400 rounded-sm my-[3rem] ">
+        <div className="flex justify-between border-[1px] border-gray-600 rounded-sm my-[2rem] lg:my-[3rem] ">
           <input
             type="text"
             onChange={(e) => {
@@ -40,7 +55,7 @@ const Home = () => {
                 navigate("/login");
               }
             }}
-            className="cursor-pointer w-[10vw] px-[1rem] py-[0.8rem] bg-blue-500 hover:bg-blue-600 rounded-r-sm text-white font-semibold"
+            className="cursor-pointer text-[0.9rem] lg:text-[1rem] w-[35vw] lg:w-[10vw] px-[0.5rem] lg:px-[1rem] py-[0.5rem] lg:py-[0.8rem] bg-blue-500 hover:bg-blue-600 rounded-r-sm text-white font-semibold"
           >
             Shorten <i className="fa-solid fa-link"></i>
           </button>
@@ -58,7 +73,7 @@ const Home = () => {
         {localStorage.getItem("authenticated") && (
           <Link
             to="/dashboard"
-            className="bg-blue-500 hover:bg-blue-600 transition-colors duration-200 text-white font-semibold px-6 py-3 rounded-lg shadow-lg hover:shadow-xl"
+            className="bg-blue-500 hover:bg-blue-600 transition-colors duration-200 text-white font-semibold px-6 py-2 lg:py-3 rounded-lg shadow-lg hover:shadow-xl"
           >
             Go To Dashboard
           </Link>

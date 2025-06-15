@@ -20,7 +20,7 @@ const Form = ({ formData, setFormValues }) => {
                         [e.target.name]: e.target.value,
                       }));
                     }}
-                    className="rounded-sm py-[0.3rem] lg:py-[0.5rem] border-[1px] border-gray-400 outline-none my-[0.3rem] lg:my-[0.5rem] w-full pl-[0.5rem] placeholder:text-[0.9rem] placeholder:font-semibold shadow-md focus:border-blue-300"
+                    className="rounded-sm py-[0.3rem] lg:py-[0.5rem] border-[1px] border-gray-400 outline-none my-[0.3rem] lg:my-[0.5rem] w-[70vw] lg:w-full pl-[0.5rem] placeholder:text-[0.9rem] placeholder:font-semibold shadow-md focus:border-blue-300"
                   />
                 </div>
               )}

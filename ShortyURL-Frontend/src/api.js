@@ -1,14 +1,13 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: import.meta.env.VITE_BACKEND_URL,
   withCredentials: true,
 });
 
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
-    console.log("before");
     const originalRequest = error.config;
     if (
       error.response?.status === 401 &&
@@ -17,7 +16,6 @@ api.interceptors.response.use(
       !originalRequest.url.includes("/signup") &&
       !originalRequest.url.includes("/refreshToken")
     ) {
-      console.log("after");
       originalRequest._retry = true;
       try {
         const resp = await api.post("/user/refreshToken");

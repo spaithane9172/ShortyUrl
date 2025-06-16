@@ -31,12 +31,15 @@ const Authenticate = () => {
   };
   useEffect(() => {
     if (localStorage.getItem("authenticated")) {
+      setIsUserLogin(true);
       navigate("/dashboard");
+    } else {
+      setIsUserLogin(false);
     }
   }, []);
   return (
     <div className="flex justify-center items-center h-[80vh]">
-      {!localStorage.getItem("authenticated") && (
+      {!isUserLogin && (
         <div className="px-[1rem] py-[0.5rem] border-[1px] border-gray-300 shadow-lg rounded-md w-fit h-fit bg-white">
           <div
             className="absolute inset-0 bg-cover bg-center filter blur-xl -z-1"

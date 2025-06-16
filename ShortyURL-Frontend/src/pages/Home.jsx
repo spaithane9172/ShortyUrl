@@ -1,12 +1,21 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../api";
 import bg from "../assets/bg.png";
 import { toast } from "react-toastify";
+import { Context } from "../context/AppContext";
 
 const Home = () => {
   const [url, setUrl] = useState("");
+  const { setIsUserLogin, isUserLogin } = useContext(Context);
   const navigate = useNavigate();
+  useEffect(() => {
+    if (localStorage.getItem("authenticated")) {
+      setIsUserLogin(true);
+    } else {
+      setIsUserLogin(false);
+    }
+  }, []);
 
   const shortUrl = async () => {
     try {
@@ -49,7 +58,7 @@ const Home = () => {
           />
           <button
             onClick={() => {
-              if (localStorage.getItem("authenticated")) {
+              if (isUserLogin) {
                 shortUrl();
               } else {
                 navigate("/login");
@@ -70,7 +79,7 @@ const Home = () => {
           seconds.
         </p>
 
-        {localStorage.getItem("authenticated") && (
+        {isUserLogin && (
           <Link
             to="/dashboard"
             className="bg-blue-500 hover:bg-blue-600 transition-colors duration-200 text-white font-semibold px-6 py-2 lg:py-3 rounded-lg shadow-lg hover:shadow-xl"

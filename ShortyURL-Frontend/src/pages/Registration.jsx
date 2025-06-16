@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Form from "../components/Form";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../api";
 import { toast } from "react-toastify";
 import bg from "../assets/bg.png";
+import { Context } from "../context/AppContext";
 
 const Registration = () => {
   const navigate = useNavigate();
+  const { setIsUserLogin, isUserLogin } = useContext(Context);
   const [formValues, setFormValues] = useState({
     firstName: "",
     lastName: "",
@@ -44,12 +46,15 @@ const Registration = () => {
   };
   useEffect(() => {
     if (localStorage.getItem("authenticated")) {
+      setIsUserLogin(true);
       navigate("/dashboard");
+    } else {
+      setIsUserLogin(false);
     }
   }, []);
   return (
     <div className="flex justify-center items-center h-[80vh]">
-      {!localStorage.getItem("authenticated") && (
+      {!isUserLogin && (
         <div className="px-[1rem] py-[0.5rem] border-[1px] border-gray-300 shadow-lg rounded-md w-fit h-fit bg-white">
           <div
             className="absolute inset-0 bg-cover bg-center filter blur-xl -z-1"

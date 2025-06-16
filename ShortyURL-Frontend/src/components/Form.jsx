@@ -4,7 +4,7 @@ const Form = ({ formData, setFormValues }) => {
       <form className="lg:w-[30vw] flex flex-col justify-center ">
         {formData.formFields.map((formField) => {
           return (
-            <>
+            <div key={formField.placeholder}>
               {(formField.type === "text" ||
                 formField.type === "number" ||
                 formField.type === "email" ||
@@ -24,7 +24,7 @@ const Form = ({ formData, setFormValues }) => {
                   />
                 </div>
               )}
-            </>
+            </div>
           );
         })}
         <button

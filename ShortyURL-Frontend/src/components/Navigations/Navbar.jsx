@@ -21,6 +21,7 @@ const Navbar = () => {
       const response = await api.get("/user/logout");
       if (response.status === 200) {
         localStorage.removeItem("authenticated");
+        setIsUserLogin(false);
         navigate("/");
         toast.success("User LogOut.");
         setIsUserLogin(false);
@@ -64,10 +65,10 @@ const Navbar = () => {
     }
   };
   useEffect(() => {
-    if (isUserLogin || localStorage.getItem("authenticated")) {
+    if (isUserLogin) {
       fetchUserDetails();
     }
-  }, []);
+  }, [isUserLogin]);
 
   return (
     <nav className="shadow-md flex justify-between items-center px-[1rem] lg:px-[2rem] py-[1rem] bg-gradient-to-b from-gray-300 to-gray-100 fixed w-full">
@@ -126,7 +127,7 @@ const Navbar = () => {
         />
       </Link>
       <div>
-        {localStorage.getItem("authenticated") ? (
+        {isUserLogin ? (
           <div>
             <button
               onClick={() => {

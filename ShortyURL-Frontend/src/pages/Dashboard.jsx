@@ -10,7 +10,10 @@ const Dashboard = () => {
   const navigate = useNavigate();
   useEffect(() => {
     if (!localStorage.getItem("authenticated")) {
+      setIsUserLogin(false);
       navigate("/login");
+    } else {
+      setIsUserLogin(true);
     }
   }, []);
   const [url, setUrl] = useState("");
@@ -113,7 +116,7 @@ const Dashboard = () => {
   }, []);
   return (
     <div className="mt-[3rem] px-[1rem] lg:px-[2rem]">
-      {localStorage.getItem("authenticated") && (
+      {isUserLogin && (
         <div>
           <div className="flex justify-center my-[2rem]">
             <div className="border-[1px] bg-gradient-to-b from-blue-300 to-blue-100 border-gray-400 rounded-md shadow-md  flex flex-col justify-center items-center w-[40vw] lg:w-[25vw] h-[15vh] lg:h-[20vh] mx-[1rem] lg:mx-[2rem]">

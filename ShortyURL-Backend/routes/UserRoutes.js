@@ -20,7 +20,7 @@ const createRefreshToken = (userId) => {
 
 router.get("/logout", authenticateUser, (request, response) => {
   try {
-    response.clearCookie("acceessToken", {
+    response.clearCookie("accessToken", {
       httpOnly: true,
       secure: true,
       sameSite: "none",

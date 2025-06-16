@@ -38,7 +38,7 @@ router.post("/", authenticateUser, async (request, response) => {
       userId: id,
       urlUniqueCode: unicode,
       originalURL: originalUrl,
-      shortURL: "https://shortyURL.com/" + unicode,
+      shortURL: "https://shortyurl-dauo.onrender.com" + unicode,
       visited: 0,
     });
     return response

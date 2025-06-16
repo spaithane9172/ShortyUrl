@@ -45,6 +45,7 @@ const Navbar = () => {
         });
         if (response.status === 200) {
           toast.success(response.data.message);
+          setIsOpen(false);
         } else {
           toast.error(response.data.message);
         }

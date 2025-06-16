@@ -23,12 +23,12 @@ router.get("/logout", authenticateUser, (request, response) => {
     response.clearCookie("acceessToken", {
       httpOnly: true,
       secure: true,
-      sameSite: "lax",
+      sameSite: "none",
     });
     response.clearCookie("refreshToken", {
       httpOnly: true,
       secure: true,
-      sameSite: "lax",
+      sameSite: "none",
     });
     return response.status(200).json({ message: "User Logout Successfully." });
   } catch (error) {
@@ -120,7 +120,7 @@ router.post("/refreshToken", async (request, response) => {
       response.cookie("accessToken", accessToken, {
         httpOnly: true,
         secure: true,
-        sameSite: "lax",
+        sameSite: "none",
         maxAge: 1000 * 60 * 15,
       });
       return response.status(200).json({ message: "Token Refreshed." });
@@ -155,13 +155,13 @@ router.post("/login", async (request, response) => {
     response.cookie("accessToken", accessToken, {
       httpOnly: true,
       secure: true,
-      sameSite: "lax",
+      sameSite: "none",
       maxAge: 1000 * 60 * 15,
     });
     response.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       secure: true,
-      sameSite: "lax",
+      sameSite: "none",
       maxAge: 1000 * 60 * 60 * 24 * 7,
     });
 

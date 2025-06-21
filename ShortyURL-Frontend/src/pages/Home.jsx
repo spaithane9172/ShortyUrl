@@ -2,12 +2,13 @@ import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../api";
 import bg from "../assets/bg.png";
+import bgBlack from "../assets/bg_black.png";
 import { toast } from "react-toastify";
 import { Context } from "../context/AppContext";
 
 const Home = () => {
   const [url, setUrl] = useState("");
-  const { setIsUserLogin, isUserLogin } = useContext(Context);
+  const { setIsUserLogin, isUserLogin, mode } = useContext(Context);
   const navigate = useNavigate();
   useEffect(() => {
     if (localStorage.getItem("authenticated")) {
@@ -32,29 +33,42 @@ const Home = () => {
     }
   };
   return (
-    <div className="flex justify-center items-center min-h-screen px-4  overflow-hidden">
+    <div className="flex justify-center items-center h-[90vh] px-4  overflow-hidden">
       <div
-        className="absolute inset-0 bg-cover bg-center filter blur-xl -z-1"
+        className="absolute inset-0 bg-cover bg-center filter blur-sm -z-1"
         style={{
-          backgroundImage: `url(${bg})`,
+          backgroundImage: `url(${mode ? bg : bgBlack})`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
+      ></div>
+      <div
+        className={`absolute inset-0 ${
+          mode ? "bg-white/70" : "bg-black/70"
+        } z-[-1]`}
       ></div>
       <div className="text-center max-w-2xl">
         <i className="fa-solid fa-link text-[4rem] mb-[0.2rem] text-blue-500"></i>
         <h1 className="text-blue-600 font-extrabold text-3xl lg:text-5xl mb-4 tracking-tight">
           ShortyURL
         </h1>
-        <div className="flex justify-between border-[1px] border-gray-600 rounded-sm my-[2rem] lg:my-[3rem] ">
+        <div
+          className={`flex justify-between border-[1px] ${
+            mode ? "border-gray-600" : "border-white"
+          } rounded-sm my-[2rem] lg:my-[3rem]`}
+        >
           <input
             type="text"
             onChange={(e) => {
               setUrl(e.target.value);
             }}
             placeholder="https://sample.com"
-            className="outline-none rounded-l-sm w-full px-[0.5rem]"
+            className={`outline-none rounded-l-sm w-full px-[0.5rem] ${
+              mode
+                ? "text-black placeholder:text-black"
+                : "text-white placeholder:text-white"
+            }`}
           />
           <button
             onClick={() => {
@@ -69,11 +83,19 @@ const Home = () => {
             Shorten <i className="fa-solid fa-link"></i>
           </button>
         </div>
-        <h2 className="text-gray-800 text-xl lg:text-2xl font-medium mb-4">
+        <h2
+          className={`text-gray-800 text-xl lg:text-2xl font-medium mb-4 ${
+            mode ? "text-black" : "text-white"
+          }`}
+        >
           Smart Link Management Starts Here — Shorten and Share with Confidence
         </h2>
 
-        <p className="text-gray-600 text-base lg:text-lg leading-relaxed mb-6">
+        <p
+          className={`text-gray-600 text-base lg:text-lg leading-relaxed mb-6 ${
+            mode ? "text-black" : "text-white"
+          }`}
+        >
           ShortyURL helps you convert long, messy URLs into clean and shareable
           links. Fast, secure, and hassle-free—just paste and shorten in
           seconds.

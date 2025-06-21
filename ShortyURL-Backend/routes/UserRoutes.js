@@ -165,7 +165,7 @@ router.post("/login", async (request, response) => {
       maxAge: 1000 * 60 * 60 * 24 * 7,
     });
 
-    return response.status(200).json({ message: "Login SUccessful." });
+    return response.status(200).json({ message: "Login Successful." });
   } catch (error) {
     console.log(error);
     return response.status(500).json({ message: error });

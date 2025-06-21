@@ -6,7 +6,7 @@ import api from "../api";
 import { toast } from "react-toastify";
 
 const Dashboard = () => {
-  const { isUserLogin, setIsUserLogin } = useContext(Context);
+  const { isUserLogin, setIsUserLogin, mode } = useContext(Context);
   const navigate = useNavigate();
   useEffect(() => {
     if (!localStorage.getItem("authenticated")) {
@@ -115,7 +115,11 @@ const Dashboard = () => {
     fetchUrls();
   }, []);
   return (
-    <div className="mt-[3rem] px-[1rem] lg:px-[2rem]">
+    <div
+      className={`pt-[3rem] px-[1rem] lg:px-[2rem] ${
+        mode ? "bg-white" : "bg-gradient-to-b from-slate-800 to-slate-600"
+      } h-[94vh]`}
+    >
       {isUserLogin && (
         <div>
           <div className="flex justify-center my-[2rem]">
@@ -217,7 +221,11 @@ const Dashboard = () => {
                 type="text"
                 name="search"
                 placeholder="Search..."
-                className="pl-[0.5rem] py-[0.3rem] lg:py-[0.5rem] outline-none border-[1px] border-gray-300 rounded-sm w-[40vw] lg:w-[25vw]"
+                className={`${
+                  mode
+                    ? "text-black placeholder:text-black"
+                    : "text-white placeholder:text-white"
+                } pl-[0.5rem] py-[0.3rem] lg:py-[0.5rem] outline-none border-[1px] border-gray-300 rounded-sm w-[40vw] lg:w-[25vw]`}
                 onChange={(e) => {
                   setSearch(e.target.value);
                 }}
@@ -260,7 +268,7 @@ const Dashboard = () => {
 
               <div className="max-h-[700px] lg:max-h-[350px] overflow-y-auto">
                 <table className="w-full table-fixed">
-                  <tbody>
+                  <tbody className={mode ? "text-black" : "text-white"}>
                     {urlsData.map((data, indx) => (
                       <tr
                         className="text-[0.8rem] lg:text-[0.9rem]"

@@ -6,8 +6,18 @@ import Navbar from "./components/Navigations/Navbar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import { ToastContainer } from "react-toastify";
+import { useContext, useEffect } from "react";
+import { Context } from "./context/AppContext";
 
 function App() {
+  const { setMode } = useContext(Context);
+  useEffect(() => {
+    if (localStorage?.getItem("mode") === "dark") {
+      setMode(false);
+    } else {
+      setMode(true);
+    }
+  }, []);
   return (
     <>
       <ToastContainer

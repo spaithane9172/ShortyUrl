@@ -4,11 +4,12 @@ import { Link, useNavigate } from "react-router-dom";
 import api from "../api";
 import { toast } from "react-toastify";
 import bg from "../assets/bg.png";
+import bgBlack from "../assets/bg_black.png";
 import { Context } from "../context/AppContext";
 
 const Registration = () => {
   const navigate = useNavigate();
-  const { setIsUserLogin, isUserLogin } = useContext(Context);
+  const { setIsUserLogin, isUserLogin, mode } = useContext(Context);
   const [formValues, setFormValues] = useState({
     firstName: "",
     lastName: "",
@@ -55,17 +56,30 @@ const Registration = () => {
   return (
     <div className="flex justify-center items-center h-[80vh]">
       {!isUserLogin && (
-        <div className="px-[1rem] py-[0.5rem] border-[1px] border-gray-300 shadow-lg rounded-md w-fit h-fit bg-white">
+        <div
+          className={`px-[1rem] py-[0.5rem] border-[1px] border-gray-300 shadow-lg rounded-md w-fit h-fit ${
+            mode ? "bg-white" : "bg-slate-900"
+          }`}
+        >
           <div
-            className="absolute inset-0 bg-cover bg-center filter blur-xl -z-1"
+            className="absolute inset-0 bg-cover bg-center filter blur-sm -z-1"
             style={{
-              backgroundImage: `url(${bg})`,
+              backgroundImage: `url(${mode ? bg : bgBlack})`,
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}
           ></div>
-          <h1 className=" bg-white w-fit mb-[1rem] font-semibold text-[1.3rem]">
+          <div
+            className={`absolute inset-0 ${
+              mode ? "bg-white/70" : "bg-black/70"
+            } z-[-1]`}
+          ></div>
+          <h1
+            className={`${
+              mode ? "text-black" : "text-white"
+            } w-fit mb-[1rem] font-semibold text-[1.3rem]`}
+          >
             SignUp
           </h1>
           <Form
@@ -103,7 +117,9 @@ const Registration = () => {
             }}
           />
           <p className="text-center text-[0.8rem] mt-[0.5rem] mb-[1rem]">
-            Already have an account?{" "}
+            <span className={mode ? "text-black" : "text-white"}>
+              Already have an account?
+            </span>{" "}
             <Link to="/login" className="text-blue-600 underline">
               LogIn
             </Link>

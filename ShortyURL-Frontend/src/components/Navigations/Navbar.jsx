@@ -5,8 +5,9 @@ import { Context } from "../../context/AppContext";
 import api from "../../api";
 import Modal from "../Modal";
 import { toast } from "react-toastify";
+import ThemeButton from "../ThemeButton";
 const Navbar = () => {
-  const { setIsUserLogin, isUserLogin } = useContext(Context);
+  const { setIsUserLogin, isUserLogin, mode } = useContext(Context);
 
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
@@ -72,7 +73,13 @@ const Navbar = () => {
   }, [isUserLogin]);
 
   return (
-    <nav className="shadow-md flex justify-between items-center px-[1rem] lg:px-[2rem] py-[1rem] bg-gradient-to-b from-gray-300 to-gray-100 fixed w-full">
+    <nav
+      className={`shadow-md flex justify-between items-center px-[1rem] lg:px-[2rem] py-[1rem] ${
+        mode
+          ? "bg-gradient-to-b from-gray-300 to-gray-100"
+          : "bg-gradient-to-b from-slate-950 to-slate-900"
+      } fixed w-full`}
+    >
       <Modal
         title="Profile"
         isOpen={isOpen}
@@ -127,7 +134,10 @@ const Navbar = () => {
           className=" w-[6rem] lg:w-[10rem] h-[2rem] lg:h-[3rem]"
         />
       </Link>
-      <div>
+      <div className="flex items-center">
+        <div className="mx-[1rem]">
+          <ThemeButton />
+        </div>
         {isUserLogin ? (
           <div>
             <button
@@ -139,7 +149,11 @@ const Navbar = () => {
               <i className="fa-solid fa-user text-[1.2rem] text-blue-500"></i>
             </button>
             {showDropDown && (
-              <div className="flex flex-col absolute right-[2rem] bg-white shadow-md border-[1px] border-gray-300">
+              <div
+                className={`flex flex-col absolute right-[2rem] ${
+                  mode ? "bg-white text-black" : "bg-slate-900 text-white"
+                } border-[1px] border-gray-300 rounded-md shadow-lg`}
+              >
                 <button
                   onClick={() => {
                     setIsOpen(true);

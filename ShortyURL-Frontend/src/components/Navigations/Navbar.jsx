@@ -152,7 +152,7 @@ const Navbar = () => {
               <div
                 className={`flex flex-col absolute right-[2rem] ${
                   mode ? "bg-white text-black" : "bg-slate-900 text-white"
-                } border-[1px] border-gray-300 rounded-md shadow-lg`}
+                } border-[1px] border-gray-300 rounded-md shadow-lg z-50`}
               >
                 <button
                   onClick={() => {

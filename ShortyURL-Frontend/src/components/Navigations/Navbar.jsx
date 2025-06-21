@@ -78,7 +78,7 @@ const Navbar = () => {
         mode
           ? "bg-gradient-to-b from-gray-300 to-gray-100"
           : "bg-gradient-to-b from-slate-950 to-slate-900"
-      } fixed w-full`}
+      } fixed w-full z-50`}
     >
       <Modal
         title="Profile"
@@ -149,14 +149,14 @@ const Navbar = () => {
               <i className="fa-solid fa-user text-[1.2rem] text-blue-500"></i>
             </button>
             {showDropDown && (
-              <button
-                onClick={(e) => e.stopPropagation()}
+              <div
                 className={`flex flex-col absolute right-[2rem] ${
                   mode ? "bg-white text-black" : "bg-slate-900 text-white"
                 } border-[1px] border-gray-300 rounded-md shadow-lg z-50`}
               >
                 <button
                   onClick={() => {
+                    console.log("object");
                     setIsOpen(true);
                   }}
                   className="px-[1rem] py-[0.5rem] border-b-[1px] border-gray-300 cursor-pointer"
@@ -169,7 +169,7 @@ const Navbar = () => {
                 >
                   LogOut
                 </button>
-              </button>
+              </div>
             )}
           </div>
         ) : (

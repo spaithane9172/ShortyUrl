@@ -33,9 +33,9 @@ const Home = () => {
     }
   };
   return (
-    <div className="flex justify-center items-center h-[90vh] px-4  overflow-hidden">
+    <div className="relative flex justify-center items-center min-h-screen px-4 overflow-hidden">
       <div
-        className="absolute inset-0 bg-cover bg-center filter blur-sm -z-1"
+        className="absolute inset-0 bg-cover bg-center filter blur-sm z-[-2]"
         style={{
           backgroundImage: `url(${mode ? bg : bgBlack})`,
           backgroundRepeat: "no-repeat",
@@ -43,11 +43,13 @@ const Home = () => {
           backgroundPosition: "center",
         }}
       ></div>
+
       <div
         className={`absolute inset-0 ${
           mode ? "bg-white/70" : "bg-black/70"
         } z-[-1]`}
-      ></div>
+      />
+
       <div className="text-center max-w-2xl">
         <i className="fa-solid fa-link text-[4rem] mb-[0.2rem] text-blue-500"></i>
         <h1 className="text-blue-600 font-extrabold text-3xl lg:text-5xl mb-4 tracking-tight">

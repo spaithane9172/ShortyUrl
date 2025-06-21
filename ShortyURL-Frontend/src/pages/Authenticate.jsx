@@ -40,7 +40,7 @@ const Authenticate = () => {
     }
   }, []);
   return (
-    <div className="flex justify-center items-center h-[80vh]">
+    <div className="relative flex justify-center items-center min-h-screen">
       {!isUserLogin && (
         <div
           className={`px-[1rem] py-[0.5rem] border-[1px] border-gray-300 shadow-lg rounded-md w-fit h-fit ${
@@ -48,7 +48,7 @@ const Authenticate = () => {
           } `}
         >
           <div
-            className="absolute inset-0 bg-cover bg-center filter blur-sm -z-1"
+            className="absolute inset-0 bg-cover bg-center filter blur-sm z-[-2]"
             style={{
               backgroundImage: `url(${mode ? bg : bgBlack})`,
               backgroundRepeat: "no-repeat",
@@ -62,7 +62,7 @@ const Authenticate = () => {
             } z-[-1]`}
           ></div>
           <h1
-            className={`w-fit mb-[1rem] font-semibold text-[1.3rem] ${
+            className={`w-fit mb-[1rem] font-semibold text-[1.3rem] h-[100vh] ${
               mode ? "text-black" : "text-white"
             }`}
           >

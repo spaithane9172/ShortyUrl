@@ -62,7 +62,7 @@ const Authenticate = () => {
             } z-[-1]`}
           ></div>
           <h1
-            className={`w-fit mb-[1rem] font-semibold text-[1.3rem] h-[100vh] ${
+            className={`w-fit mb-[1rem] font-semibold text-[1.3rem] ${
               mode ? "text-black" : "text-white"
             }`}
           >

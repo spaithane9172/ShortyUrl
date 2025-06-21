@@ -156,7 +156,6 @@ const Navbar = () => {
               >
                 <button
                   onClick={() => {
-                    console.log("object");
                     setIsOpen(true);
                   }}
                   className="px-[1rem] py-[0.5rem] border-b-[1px] border-gray-300 cursor-pointer"

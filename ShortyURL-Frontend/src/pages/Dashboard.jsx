@@ -164,7 +164,7 @@ const Dashboard = () => {
               />
               <button
                 onClick={updateUrl}
-                className="text-[0.9rem] bg-blue-500 hover:bg-blue-600 font-semibold px-[1rem] py-[0.3rem] lg:py-[0.5rem] rounded-md text-white"
+                className="text-[0.9rem] bg-blue-500 hover:bg-blue-600 font-semibold px-[1rem] py-[0.3rem] lg:py-[0.5rem] rounded-md text-white cursor-pointer"
               >
                 Update URL
               </button>
@@ -190,7 +190,7 @@ const Dashboard = () => {
               />
               <button
                 onClick={shortUrl}
-                className="text-[0.9rem] bg-blue-500 hover:bg-blue-600 font-semibold px-[1rem] py-[0.3rem] lg:py-[0.5rem] rounded-md text-white"
+                className="text-[0.9rem] bg-blue-500 hover:bg-blue-600 font-semibold px-[1rem] py-[0.3rem] lg:py-[0.5rem] rounded-md text-white cursor-pointer"
               >
                 Shorten URL
               </button>

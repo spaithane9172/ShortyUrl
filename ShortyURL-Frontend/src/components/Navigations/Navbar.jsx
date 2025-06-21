@@ -121,7 +121,7 @@ const Navbar = () => {
           />
           <button
             onClick={updateUserDetails}
-            className="bg-blue-500 hover:bg-blue-600 font-semibold text-white rounded-sm my-[1rem] py-[0.3rem] lg:py-[0.5rem]"
+            className="cursor-pointer bg-blue-500 hover:bg-blue-600 font-semibold text-white rounded-sm my-[1rem] py-[0.3rem] lg:py-[0.5rem]"
           >
             Update
           </button>

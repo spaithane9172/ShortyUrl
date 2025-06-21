@@ -19,7 +19,7 @@ const ThemeButton = () => {
         }}
         className={`z-1 w-[3.5rem] h-[2rem] flex items-center ${
           mode ? "justify-start" : "justify-end"
-        } rounded-full`}
+        } rounded-full cursor-pointer`}
       >
         <img
           src={mode ? daybg : nightbg}

@@ -149,7 +149,8 @@ const Navbar = () => {
               <i className="fa-solid fa-user text-[1.2rem] text-blue-500"></i>
             </button>
             {showDropDown && (
-              <div
+              <button
+                onClick={(e) => e.stopPropagation()}
                 className={`flex flex-col absolute right-[2rem] ${
                   mode ? "bg-white text-black" : "bg-slate-900 text-white"
                 } border-[1px] border-gray-300 rounded-md shadow-lg z-50`}
@@ -168,7 +169,7 @@ const Navbar = () => {
                 >
                   LogOut
                 </button>
-              </div>
+              </button>
             )}
           </div>
         ) : (

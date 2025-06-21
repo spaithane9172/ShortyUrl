@@ -30,6 +30,7 @@ function App() {
         draggable
         pauseOnHover
         theme="colored" // "light", "dark", or "colored"
+        limit={2}
       />
 
       <Router>

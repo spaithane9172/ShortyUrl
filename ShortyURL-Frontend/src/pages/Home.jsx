@@ -21,9 +21,15 @@ const Home = () => {
   const shortUrl = async () => {
     try {
       if (url.length > 6) {
-        const response = await api.post("/url", { originalUrl: url });
+        if (!url.includes("https://")) {
+          setUrl((prev) => "https://" + prev);
+        }
+        const response = await api.post("/url", {
+          originalUrl: url.includes("https://") ? url : "https://" + url,
+        });
         if (response.status === 200) {
           toast.success(response.data.message);
+          setUrl("");
         } else {
           toast.error(response.data.message);
         }
@@ -65,6 +71,7 @@ const Home = () => {
             onChange={(e) => {
               setUrl(e.target.value);
             }}
+            value={url}
             placeholder="https://sample.com"
             className={`outline-none rounded-l-sm w-full px-[0.5rem] ${
               mode

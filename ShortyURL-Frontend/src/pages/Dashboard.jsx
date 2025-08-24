@@ -42,7 +42,9 @@ const Dashboard = () => {
     e.preventDefault();
     try {
       if (url.length > 6) {
-        const response = await api.post("/url", { originalUrl: url });
+        const response = await api.post("/url", {
+          originalUrl: url.includes("https://") ? url : "https://" + url,
+        });
         if (response.status == 200) {
           toast.success(response.data.message);
           setIsUserLogin(true);
@@ -81,7 +83,9 @@ const Dashboard = () => {
       if (url.originalURL.length > 6) {
         const response = await api.put("/url", {
           _id: url._id,
-          originalUrl: url.originalURL,
+          originalUrl: url.originalURL.includes("https://")
+            ? url.originalURL
+            : "https://" + url.originalURL,
         });
         if (response.status === 200) {
           toast.success(response.data.message);

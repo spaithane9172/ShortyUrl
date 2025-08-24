@@ -19,11 +19,15 @@ api.interceptors.response.use(
       originalRequest._retry = true;
       try {
         const resp = await api.post("/user/refreshToken");
+        console.log("respnse of refreshTOken", resp);
         if (resp.status !== 200) {
           localStorage.removeItem("authenticated");
+          window.location.href = "/login";
         }
         return api(originalRequest);
       } catch (refreshError) {
+        console.log(refreshError);
+        localStorage.removeItem("authenticated");
         window.location.href = "/login";
         return Promise.reject(refreshError);
       }

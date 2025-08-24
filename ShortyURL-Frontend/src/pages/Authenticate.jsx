@@ -13,7 +13,6 @@ const Authenticate = () => {
   const [formValues, setFormValues] = useState({ email: "", password: "" });
   const login = async (e) => {
     e.preventDefault();
-    console.log("object");
     if (formValues.email.length !== 0 && formValues.password.length >= 8) {
       try {
         const response = await api.post("/user/login", formValues);
